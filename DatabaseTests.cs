@@ -18,22 +18,34 @@ namespace XUnitTestMeldboek
     {
         Database Db { get; set; }
 
+        private int randomId;
+        private string firstName;
+        private string lastName;
+        private string email;
+        private string passwd;
+
         public DatabaseTests()
         {
+            randomId = Faker.NumberFaker.Number();
+            firstName = Faker.NameFaker.FirstName();
+            lastName = Faker.NameFaker.LastName();
+            email = firstName + lastName + "@test.com";
+            passwd = firstName + lastName + "!";
+
             Db = new Database();
             AddTestPerson();
         }
 
         private void AddTestPerson()
         {
-            _ = Db.ConnectDb("CREATE (p:Person { PersonId: 123456789, FirstName: 'testFirstName', LastName: 'testLastName', Email: 'test@email.com', Password: 'testPassword' })");
+            _ = Db.ConnectDb("CREATE (p:Person { PersonId: " + randomId + ", FirstName: '" + firstName + "', LastName: '" + lastName+ "', Email: '" + email + "', Password: '" + passwd + "' })");
             System.Threading.Thread.Sleep(500);
         }
 
         [Fact]
         public void GetValueDatabase_correctQuery()
         {
-            var getNodes = Db.ConnectDb("MATCH (p:Person) WHERE p.PersonId = 123456789 RETURN p LIMIT 1");
+            var getNodes = Db.ConnectDb("MATCH (p:Person) WHERE p.PersonId = " + randomId + " RETURN p LIMIT 1");
             var user = new Person();
 
             List<INode> nodes = getNodes.Result;
@@ -43,16 +55,16 @@ namespace XUnitTestMeldboek
                 user = (JsonConvert.DeserializeObject<Person>(nodeprops));
             }
 
-            Assert.Equal("testFirstName", user.FirstName);
-            Assert.Equal("testLastName", user.LastName);
-            Assert.Equal("test@email.com", user.Email);
-            Assert.Equal("testPassword", user.Password);
+            Assert.Equal(firstName, user.FirstName);
+            Assert.Equal(lastName, user.LastName);
+            Assert.Equal(email, user.Email);
+            Assert.Equal(passwd, user.Password);
         }
 
         [Fact]
         public void GetValueDatabase_wrongQuery()
         {
-            var getNodes = Db.ConnectDb("MATCH (p:Persons) WHERE p.PersonId = 123456789 RETURN p LIMIT 1");
+            var getNodes = Db.ConnectDb("MATCH (p:Persons) WHERE p.PersonId = " + randomId + " RETURN p LIMIT 1");
             var user = new Person();
 
             List<INode> nodes = getNodes.Result;
