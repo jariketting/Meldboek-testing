@@ -12,7 +12,7 @@ using System.Net.Http;
 
 namespace XUnitTestMeldboek
 {
-    public class PersonListTest
+    public class PersonControllerTest
     {
         Database Db { get; set; }
 
@@ -26,7 +26,7 @@ namespace XUnitTestMeldboek
         /// Init test with database connection and generate random names
         /// </summary>
 
-        public PersonListTest()
+        public PersonControllerTest()
         {
 
 
@@ -242,7 +242,15 @@ namespace XUnitTestMeldboek
             r3.Wait();
 
             var result = PC.GetFriends();
-            Assert.True(result.Count == 3);
+            Assert.True(result.Count == 4);
+        }
+
+        [Fact]
+        public void CheckFriendStatusTest()
+        {
+            string rstatus = PC.CheckFriendStatus(PersonList[30].PersonId);
+            string status = PersonList[30].status;
+            Assert.True(status.Equals(rstatus));
         }
     }
 }
