@@ -69,6 +69,8 @@ namespace XUnitTestMeldboek
 
             Assert.NotNull(actionResult);
             Assert.Equal("ManageGroup", actionResult.ActionName);
+
+            // https://stackoverflow.com/questions/2440203/unit-testing-a-controller-in-asp-net-mvc-2-with-redirecttoaction
         }
     }
 }
