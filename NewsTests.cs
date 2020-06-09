@@ -47,7 +47,7 @@ namespace XUnitTestMeldboek
         }
 
         /// <summary>
-        /// 
+        /// test if no errors occur when no feed are found within the database
         /// </summary>
         [Fact]
         public void GetFeed_nofeedfound()
@@ -59,6 +59,9 @@ namespace XUnitTestMeldboek
             Assert.Empty(feed);
         }
 
+        /// <summary>
+        /// add test post to database and test if getFeed returns that same post
+        /// </summary>
         [Fact]
         public void GetFeed_feedFound()
         {

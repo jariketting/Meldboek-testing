@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\meldboek4\meldboek.csproj" />
+    <ProjectReference Include="..\meldboek\meldboek.csproj" />
   </ItemGroup>
 
 </Project>
